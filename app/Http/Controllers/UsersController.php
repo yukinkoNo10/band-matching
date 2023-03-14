@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -26,12 +29,16 @@ class UsersController extends Controller
         return view('users.login');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    //会員登録
+    public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['image'] = $request->file('image')->store('users', 'public');
+        $validated['password'] = Hash::make($validated['password']);
+        $user = new User($validated);
+        $user->save();
+
+        return to_route('users.login');
     }
 
     /**

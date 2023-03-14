@@ -2,14 +2,88 @@
 @section('title', '会員登録')
 
 @section('content')
-<div class="py-10">
-    <form class="border p-10 shadow-xl rounded-lg bg-pink-100">
-        <h1 class="text-center mb-5 text-3xl">Create My Account</h1>
-        <p class="text-right">ユーザー名: <input class="border py-1 px-2 mb-2 rounded-md" type="text" placeholder="Username"/></p>
-        <p class="text-right">Eメール: <input class="border py-1 px-2 mb-2 rounded-md" type="text" placeholder="Email"/></p>
-        <p class="text-right">パスワード: <input class="border py-1 px-2 mb-2 rounded-md" type="password" placeholder="Password"/></p>
-        <p class="text-right">確認用: <input class="border py-1 px-2 mb-2 rounded-md" type="password" placeholder="ConfirmPassword"/></p>
-        <button type="submit" class="ml-12 mt-10 border rounded-md py-1 px-2 w-48 shadow-md bg-white hover:bg-red">登録</button>
-    </form>
-</div>
+    <div class="py-10 mb-20">
+        <form class="border p-10 shadow-xl rounded-lg bg-pink-50" action="{{ route('users.store') }}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
+            <h1 class="text-center mb-5 text-3xl">Create My Account</h1>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2 @error('name') is_invalid @enderror" for="name">ユーザー名</label>
+                <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text"
+                    name="name" value="{{ old('name') }}">
+                @error('name')
+                    <p class="text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2 @error('email') is_invalid @enderror"
+                    for="email">メールアドレス</label>
+                <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="email"
+                    name="email" value="{{ old('email') }}">
+                @error('email')
+                    <p class="text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2 @error('password') is_invalid @enderror"
+                    for="password">パスワード</label>
+                <input id="password" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="password"
+                    name="password">
+                @error('password')
+                    <p class="text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2"
+                    for="confirm_password @error('confirm_password') is_invalid @enderror">パスワード(確認)</label>
+                <input id="confirm_password" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded"
+                    type="password" name="confirm_password">
+                @error('confirm_password')
+                    <p class="text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2 @error('image') is_invalid @enderror" for="image">画像</label>
+                <div class="flex items-end">
+                    <img id="previewImage" src="/images/noimage.jpg" data-noimage="/images/noimage.jpg" alt=""
+                        class="rounded-full shadow-md w-32 mb-2">
+                    <input id="image" class="block w-full px-4 py-3 mb-2" type="file" accept='image/*'
+                        name="image">
+                </div>
+                @error('image')
+                    <p class="text-red-500">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2"
+                    for="introduction @error('introduction') is_invalid @enderror">自己紹介</label>
+                <textarea id="introduction" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="introduction"
+                    rows="4">{{ old('introduction') }}</textarea>
+            </div>
+            @error('introduction')
+                <p class="text-red-500">{{ $message }}</p>
+            @enderror
+            <button type="submit"
+                class="ml-40 mt-10 border rounded-md py-1 px-2 w-48 shadow-md bg-white hover:bg-red">新規作成</button>
+        </form>
+    </div>
+
+    <script>
+        //画像プレビュー
+        document.getElementById('image').addEventListener('change', e => {
+            const previewImageNode = document.getElementById('previewImage')
+            const fileReader = new FileReader()
+            fileReader.onload = () => previewImageNode.src = fileReader.result
+            if (e.target.files.length > 0) {
+                fileReader.readAsDataURL(e.target.files[0])
+            } else {
+                previewImageNode.src = previewImageNode.dataset.noimage
+            }
+        })
+    </script>
 @endsection
