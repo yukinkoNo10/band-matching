@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MypageController;
+use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//トップ・会員登録・ログイン関連
+//トップ
 Route::get('/', [UsersController::class, 'index'])->name('users.index');
+
+//会員登録
 Route::get('/users/register', [UsersController::class, 'create'])->name('users.create');
 Route::post('/users', [UsersController::class, 'store'])->name('users.store');
-Route::get('/users/login', [UsersController::class, 'login'])->name('users.login');
+
+//ログイン関連
+Route::get('/users/login', [AuthController::class, 'index'])->name('users.index');
+Route::post('/users/login', [AuthController::class, 'login'])->name('users.login');
+Route::post('/users/logout', [AuthController::class, 'logout'])->name('users.logout');
+
+//マイページ
+Route::get('/mypage/{id}', [MypageController::class, 'index'])->name('mypage.index');
 
