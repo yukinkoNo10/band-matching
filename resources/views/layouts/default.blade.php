@@ -12,15 +12,14 @@
 <body>
     <div class="w-full h-full font-serif min-h-screen box-border relative">
         <header class="flex justify-between bg-gradient-to-r from-purple-500 to-pink-500 w-full py-3 px-20">
-            <h1 class="text-3xl text-white text-blue-900 cursor-default">Let's Band!</h1>
+            <h1 class="text-center h-10 leading-10 my-auto text-3xl text-white text-blue-900 cursor-default"><a
+                    href="{{ route('users.index') }}">Let's Band!</a></h1>
             @if (\Auth::user())
                 <div class="flex">
-                    <form class="my-auto" action="{{ route('users.logout') }}" method="POST">
+                    <form class="my-auto" action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <a href="{{ route('users.logout') }}">
-                            <button
-                                class="border border-white h-12 font-semibold text-white py-2 px-4 rounded-lg hover:bg-white hover:text-pink-600">ログアウト</button>
-                        </a>
+                        <button
+                            class="border border-white h-12 font-semibold text-white py-2 px-4 rounded-lg hover:bg-white hover:text-pink-600">ログアウト</button>
                     </form>
                     <div class="flex">
                         <a href="{{ route('mypage.index', ['id' => \Auth::user()->id]) }}"><img
@@ -32,7 +31,7 @@
                 <div class="">
                     <a href="{{ route('users.create') }}"><button
                             class="mx-1 border border-white  font-semibold text-white py-2 px-4 rounded-lg hover:bg-white hover:text-pink-600">会員登録</button></a>
-                    <a href="{{ route('users.login') }}"><button
+                    <a href="{{ route('login.index') }}"><button
                             class="mx-1 border border-white  font-semibold text-white py-2 px-4 rounded-lg hover:bg-white hover:text-pink-500">ログイン</button></a>
                 </div>
             @endif

@@ -24,9 +24,9 @@ Route::get('/users/register', [UsersController::class, 'create'])->name('users.c
 Route::post('/users', [UsersController::class, 'store'])->name('users.store');
 
 //ログイン関連
-Route::get('/users/login', [AuthController::class, 'index'])->name('users.index');
-Route::post('/users/login', [AuthController::class, 'login'])->name('users.login');
-Route::post('/users/logout', [AuthController::class, 'logout'])->name('users.logout');
+Route::get('/login', [AuthController::class, 'index'])->name('login.index');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //マイページ
 Route::get('/mypage/{id}', [MypageController::class, 'index'])->name('mypage.index');

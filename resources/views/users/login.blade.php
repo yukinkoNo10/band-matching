@@ -10,7 +10,7 @@
         @endif
         <div class="flex justify-center w-hull bg-opacity-25">
             <div>
-                <form class="border p-10 shadow-xl rounded-lg bg-pink-50" action="{{ route('users.login') }}" method="POST">
+                <form class="border p-10 shadow-xl rounded-lg bg-pink-50" action="{{ route('login') }}" method="POST">
                     @csrf
                     <h1 class="text-center mb-5 text-3xl">Login</h1>
                     <p><input class="border py-1 px-2 mb-5 rounded-md" name="email" type="text" placeholder="Email" value="{{ old('email') }}" /></p>
